@@ -5,8 +5,6 @@ def javaAgent = 'build && java'
 def environment = "test"
 def machineName = "dev1"
 
-@Library(['my-lib@feature/jenkins-pipeline-for-index-creation']) _
-
 // pipeline
 node(javaAgent) {
 properties([
