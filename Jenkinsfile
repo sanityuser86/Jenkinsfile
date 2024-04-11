@@ -1,12 +1,11 @@
 #!groovy
 // pipeline config
-def javaAgent = 'any'
 
 def environment = "test"
 def machineName = "dev1"
 
 // pipeline
-node(javaAgent) {
+node(build) {
 properties([
         [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator',daysToKeepStr: '1', numToKeepStr: '4']],
         parameters([            
