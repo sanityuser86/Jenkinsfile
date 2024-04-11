@@ -1,9 +1,10 @@
-    stage('SSH commands') {
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-credentials-id', keyFileVariable: 'MY_SSH_KEY')]) {
-                    sh '''
-                    ssh -i $MY_SSH_KEY SHA256:bDAyGoEFa/l35X7XKjdtF2UyM7MbP4mYQCQnLuDhatk  "commands to execute"
-                    '''
-                }
+                mvn 'clean install'
             }
         }
+    }
+}
