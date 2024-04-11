@@ -1,6 +1,6 @@
 #!groovy
 // pipeline config
-def javaAgent = 'build && java'
+def javaAgent = 'build'
 
 def environment = "test"
 def machineName = "dev1"
