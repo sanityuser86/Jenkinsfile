@@ -1,41 +1,27 @@
-#!groovy
-// pipeline config
-
-def environment = "test"
-def machineName = "dev1"
-
-// pipeline
-node(build) {
-properties([
-        [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator',daysToKeepStr: '1', numToKeepStr: '4']],
-        parameters([            
-            choice(
-                choices: ["test","production"].join("\n"),
-                defaultValue: 'test',
-                description: 'Env for Index deployment',
-                name: 'environment'
-            )
-        ])
-    ])
+pipeline{
+ 
+    agent any
     
-    try{
-        stage('Collect info') {
-                checkout scm
+    stages{
+ 
+        stage('Build application'){
+            steps{
+               echo 'Building the application ..'
+            }
         }
-        stage('Creating Indexes'){
         
-            environment=params.environment
-            if(environment=="production"){
-                machineName = "prod1"
-            }   
-            
-            myVar.createIndexes environment: environment, 
-                    deployToMachine: machineName        
-
+        stage('Test application'){
+            steps{
+               echo 'Testing the application ..'
+            }
         }
-
-    } catch (e){
-            pcSlack.notify channel:"ksr", message: "${environment}"+" Couchbase index creation failed : + {e}"
-            currentBuild.result = 'FAILURE' 
-    }   
-}
+    
+        stage('Deploy application'){
+            steps{
+               echo 'Deploying the application ..'
+            }
+        }
+    
+    }
+ 
+ }
