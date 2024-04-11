@@ -1,9 +1,9 @@
-steps {
-    sshagent(credentials: ['ssh-credentials-id']) {
-      sh '''
-          [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-          ssh-keyscan -t rsa,dsa sanityuser86 >> ~/.ssh/known_hosts
-          ssh sanityuser86 ...
-      '''
-    }
-}
+    stage('SSH commands') {
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-credentials-id', keyFileVariable: 'MY_SSH_KEY')]) {
+                    sh '''
+                    ssh -i $MY_SSH_KEY SHA256:bDAyGoEFa/l35X7XKjdtF2UyM7MbP4mYQCQnLuDhatk  "commands to execute"
+                    '''
+                }
+            }
+        }
