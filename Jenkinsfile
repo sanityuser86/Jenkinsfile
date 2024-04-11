@@ -38,7 +38,7 @@ properties([
         }
 
     } catch (e){
-            pcSlack.notify channel:"ksr", message: ${environment}"+" Couchbase index creation failed : "+e"
+            pcSlack.notify channel:"ksr", message: "${environment}"+" Couchbase index creation failed : + {e}"
             currentBuild.result = 'FAILURE' 
     }   
 }
